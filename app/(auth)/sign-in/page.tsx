@@ -10,7 +10,7 @@ import FooterLink from '@/components/forms/FooterLink';
 import {useRouter} from "next/navigation";
 
 const SignIn = () => {
-    const router = useRouter()
+    const router = useRouter()  
     const {
         register,
         handleSubmit,
