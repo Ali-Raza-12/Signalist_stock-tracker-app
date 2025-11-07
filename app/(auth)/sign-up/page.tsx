@@ -8,8 +8,12 @@ import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from '
 import SelectField from '@/components/forms/SelectField';
 import { SelectCountryField } from '@/components/forms/SelectCountryField';
 import FooterLink from '@/components/forms/FooterLink';
+import { signUpWithEmail } from '@/lib/actions/auth.action';
+import { useRouter } from "next/navigation";
+import { toast } from 'sonner';
 
 const SignUp = () => {
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -31,9 +35,12 @@ const SignUp = () => {
 
     const onSubmit = async (SignUpFormData) => {
         try {
-            console.log()
-        } catch (error) {
-
+           const result = await signUpWithEmail(data)
+           if (result.success) router.push('/')
+        } catch (e) {
+            toast.error('Sign up failed', {
+                description: error instanceof Error ? e.message : 'Failed to create an error'
+            })
         }
     }
     return (
