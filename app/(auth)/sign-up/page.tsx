@@ -30,23 +30,29 @@ const SignUp = () => {
             preferredIndustry: 'Technology'
         },
         mode: 'onBlur'
-    },
-    )
+    })
 
-    const onSubmit = async (SignUpFormData) => {
+    const onSubmit = async (data: SignUpFormData) => {
         try {
-           const result = await signUpWithEmail(data)
-           if (result.success) router.push('/')
-        } catch (e) {
-            toast.error('Sign up failed', {
-                description: error instanceof Error ? e.message : 'Failed to create an error'
-            })
+            const result = await signUpWithEmail(data)
+            if (result.success) {
+                toast.success('Account created successfully!');
+                router.push('/')
+            } else {
+                toast.error('Sign up failed', {
+                    description: result.error || 'Failed to create account'
+                })
+            }
+        } catch {
+           toast.error('Sign up failed1', {
+                description: 'An unexpected error occurred. Please try again.'
+            });
         }
     }
     return (
         <>
             <h1 className='form-title'>Sign Up & Personalize</h1>
-            <form onSubmit={handleSubmit()} className='space-y-5'>
+            <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
 
                 <InputFields
                     name="fullName"
