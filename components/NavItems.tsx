@@ -4,8 +4,9 @@ import { NAV_ITEMS } from '@/lib/constant'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import SearchCommands from './SearchCommands'
 
-const NavItems = () => {
+const NavItems = ({ initialStocks }: { initialStocks: StockWithWatchlistStatus[] }) => {
     const pathname = usePathname();
 
     const isActive = (path: string) => {
@@ -16,13 +17,23 @@ const NavItems = () => {
 
     return (
         <ul className='flex flex-col sm:flex-row p-3 gap-3 sm:gap-10 font-medium'>
-            {NAV_ITEMS.map(({ href, label }) => (
-                <li key={href}>
+            {NAV_ITEMS.map(({ href, label }) => {
+                if (href === '/search') return (
+                    <li key="search-trigger">
+                        <SearchCommands
+                            renderAs="text"
+                            label="Search"
+                            initialStocks={initialStocks}
+                        />
+                    </li>
+                )
+
+                return <li key={href}>
                     <Link href={href} className={`hover:text-yellow-500 transition-colors ${isActive(href) ? 'text-gray-100' : ''}`}>
                         {label}
                     </Link>
                 </li>
-            ))}
+            })}
         </ul>
     )
 }
