@@ -8,7 +8,7 @@ import { Loader2, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
 
-const SearchCommands = ({ renderAs = 'button', label = 'Add stock', initialStocks }) => {
+const SearchCommands = ({ renderAs = 'text', label = 'Add stock', initialStocks }) => {
 
     const [open, setOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -62,7 +62,7 @@ const SearchCommands = ({ renderAs = 'button', label = 'Add stock', initialStock
     return (
         <>
             {renderAs === 'text' ? (
-                <span onClick={() => setOpen(true)} className="search-btn">
+                <span onClick={() => setOpen(true)} className="">
                     {label}
                 </span>
             ) : (
