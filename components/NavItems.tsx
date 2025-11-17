@@ -13,7 +13,7 @@ const NavItems = ({ initialStocks }: { initialStocks: StockWithWatchlistStatus[]
         if (path === "/") return pathname === '/';
 
         if (path === "/search") {
-            return pathname.startsWith("/stocks") || pathname.startsWith("/search");
+            return pathname.startsWith("/stocks");
         }
 
         return pathname.startsWith(path);
@@ -23,7 +23,7 @@ const NavItems = ({ initialStocks }: { initialStocks: StockWithWatchlistStatus[]
         <ul className='flex flex-col sm:flex-row p-3 gap-3 sm:gap-10 font-medium'>
             {NAV_ITEMS.map(({ href, label }) => {
                 if (href === '/search') return (
-                    <li key="search-trigger" className={`hover:text-yellow-500 transition-colors ${isActive(href) ? 'text-gray-100' : ''}`}>
+                    <li key="search-trigger" className={`hover:text-yellow-500 transition-colors cursor-pointer ${isActive(href) ? 'text-gray-100' : ''}`}>
                         <SearchCommands
                             renderAs="text"
                             label="Search"

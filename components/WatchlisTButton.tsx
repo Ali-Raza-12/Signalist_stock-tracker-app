@@ -1,5 +1,7 @@
 "use client";
+import { toggleWatchList } from "@/lib/actions/watchlist.actions";
 import React, { useMemo, useState } from "react";
+import { toast } from "sonner";
 
 const WatchlistButton = ({
   symbol,
@@ -10,16 +12,33 @@ const WatchlistButton = ({
   onWatchlistChange,
 }: WatchlistButtonProps) => {
   const [added, setAdded] = useState<boolean>(!!isInWatchlist);
+  const [loading, setLoading] = useState<boolean>(false)
+
 
   const label = useMemo(() => {
     if (type === "icon") return added ? "" : "";
     return added ? "Remove from Watchlist" : "Add to Watchlist";
   }, [added, type]);
 
-  const handleClick = () => {
-    const next = !added;
-    setAdded(next);
-    onWatchlistChange?.(symbol, next);
+  const handleClick = async () => {
+
+    setLoading(true)
+
+    try {
+      const result = await toggleWatchList(symbol, company, added);
+
+      if (result.success) {
+        const next = !added;
+        setAdded(next);
+        onWatchlistChange?.(symbol, next);
+      } else {
+        toast.error(result.error)
+      }
+    } catch {
+      toast.error("Failed to update watch list")
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (type === "icon") {
