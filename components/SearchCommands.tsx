@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { CommandDialog, CommandEmpty, CommandInput, CommandList } from "./ui/command";
 import { searchStocks } from "@/lib/actions/finnhub.actions";
 import useDebounce from "@/app/hooks/useDebounce";
-import { Loader2, TrendingUp } from "lucide-react";
+import { Loader2, TrendingUp, Star } from "lucide-react";
 import Link from "next/link";
 
 
@@ -16,7 +16,7 @@ const SearchCommands = ({ renderAs = 'text', label = 'Add stock', initialStocks 
     const [stocks, setStocks] = useState(initialStocks);
 
     const isSearchMode = !!searchTerm.trim()
-    const displayStocks = isSearchMode ? stocks : stocks.slice(0, 5);
+    const displayStocks = isSearchMode ? stocks : (stocks || []).slice(0, 5);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -101,7 +101,7 @@ const SearchCommands = ({ renderAs = 'text', label = 'Add stock', initialStocks 
                                                 {stock.symbol} | {stock.exchange} | {stock.type}
                                             </div>
                                         </div>
-                                        {/*<Star />*/}
+                                        <Star />
                                     </Link>
                                 </li>
                             ))}
